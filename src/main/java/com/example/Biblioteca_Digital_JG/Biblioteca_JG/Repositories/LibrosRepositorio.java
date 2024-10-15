@@ -1,0 +1,20 @@
+package com.example.Biblioteca_Digital_JG.Biblioteca_JG.Repositories;
+
+import com.example.Biblioteca_Digital_JG.Biblioteca_JG.Entities.EstadoLibro;
+import com.example.Biblioteca_Digital_JG.Biblioteca_JG.Entities.Libros;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
+
+public interface LibrosRepositorio extends JpaRepository<Libros, Integer> {
+
+  //para buscar por el estado
+  List<Libros> findByEstado(EstadoLibro estado);
+
+  // metodo para buscar por titulo y descripcion de la categoria
+  @Query("SELECT l FROM Libros l JOIN l.categorias c WHERE l.titulo LIKE %?1% OR c.descripcion LIKE %?1%")
+  List<Libros> buscarPorTituloODescripcionCategoria(String keyword);
+
+
+}
