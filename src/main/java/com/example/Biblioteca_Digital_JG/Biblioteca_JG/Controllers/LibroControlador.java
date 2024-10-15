@@ -1,16 +1,13 @@
 package com.example.Biblioteca_Digital_JG.Biblioteca_JG.Controllers;
 
+import com.example.Biblioteca_Digital_JG.Biblioteca_JG.DTO.LibroRequest;
 import com.example.Biblioteca_Digital_JG.Biblioteca_JG.Entities.Libros;
 import com.example.Biblioteca_Digital_JG.Biblioteca_JG.Services.LibroServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.lang.invoke.CallSite;
 import java.util.List;
 
 @RestController
@@ -18,22 +15,19 @@ import java.util.List;
 public class LibroControlador {
 
   @Autowired
-  public LibroServicio libroServicio;
+  private LibroServicio libroServicio;
 
-  //crear libro
+  // Crear libro con autor y categoría
   @PostMapping
-  public ResponseEntity<Libros> createLibro(Libros libro){
-    Libros libroNuevo = libroServicio.saveLibro(libro);
-    return new ResponseEntity<>(libro, HttpStatus.CREATED);
+  public ResponseEntity<Libros> crearLibro(@RequestBody LibroRequest libroRequest) {
+    Libros libroGuardado = libroServicio.saveLibro(libroRequest);
+    return ResponseEntity.status(HttpStatus.CREATED).body(libroGuardado);
   }
 
-  //obtener todos los usuarios
+  // Obtener todos los libros
   @GetMapping
-  public ResponseEntity<List<Libros>> getAllLibros(){
+  public ResponseEntity<List<Libros>> getAllLibros() {
     List<Libros> libros = libroServicio.getAllLibros();
     return new ResponseEntity<>(libros, HttpStatus.OK);
   }
-
-
-
 }

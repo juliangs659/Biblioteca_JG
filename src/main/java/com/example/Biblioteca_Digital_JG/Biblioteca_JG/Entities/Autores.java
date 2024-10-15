@@ -1,7 +1,9 @@
 package com.example.Biblioteca_Digital_JG.Biblioteca_JG.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -11,9 +13,10 @@ public class Autores {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int idAutor;
 
-  @Column(unique = true, nullable = false)
+  @Column(unique = true)
   private String nombreAutor = "no registra";
 
+  @JsonIgnore
   @OneToMany(mappedBy = "autor")
   private Set<Libros> libros;
 
@@ -24,6 +27,15 @@ public class Autores {
     this.nombreAutor = nombreAutor;
     this.libros = libros;
   }
+  public Autores(String nombreAutor) {
+    this.nombreAutor = nombreAutor;
+    this.libros = new HashSet<>(); // Inicializa como un conjunto vacío
+  }
+
+  public Autores(String nombreAutor, Object o) {
+
+  }
+
 
   public int getIdAutor() {
     return idAutor;

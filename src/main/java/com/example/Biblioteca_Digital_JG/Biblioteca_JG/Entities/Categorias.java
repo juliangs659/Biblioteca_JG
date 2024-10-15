@@ -1,5 +1,6 @@
 package com.example.Biblioteca_Digital_JG.Biblioteca_JG.Entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -11,29 +12,25 @@ public class Categorias {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int idCategoria;
 
-  @Column(unique = true, nullable = false)
+  @Column(nullable = false)
   private String nombreCategoria;
 
-  @Column(nullable = false)
-  private String descripcion;
+  @Column(nullable = true)
+  private String descripcion; // Si tienes una descripción opcional
 
-  @ManyToMany(mappedBy = "categorias")
+  @OneToMany(mappedBy = "categoria")
   private Set<Libros> libros;
 
+  // Constructor vacío
   public Categorias() {}
 
+  // Constructor con parámetros
   public Categorias(String nombreCategoria, String descripcion) {
     this.nombreCategoria = nombreCategoria;
     this.descripcion = descripcion;
   }
 
-  public Categorias(int idCategoria, String nombreCategoria, String descripcion, Set<Libros> libros) {
-    this.idCategoria = idCategoria;
-    this.nombreCategoria = nombreCategoria;
-    this.descripcion = descripcion;
-    this.libros = libros;
-  }
-
+  // Getters y setters
   public int getIdCategoria() {
     return idCategoria;
   }
@@ -58,21 +55,13 @@ public class Categorias {
     this.descripcion = descripcion;
   }
 
-  public Set<Libros> getLibros() {
-    return libros;
-  }
-
-  public void setLibros(Set<Libros> libros) {
-    this.libros = libros;
-  }
-
   @Override
   public String toString() {
     return "Categorias{" +
             "idCategoria=" + idCategoria +
             ", nombreCategoria='" + nombreCategoria + '\'' +
             ", descripcion='" + descripcion + '\'' +
-            ", libros=" + libros +
             '}';
   }
 }
+

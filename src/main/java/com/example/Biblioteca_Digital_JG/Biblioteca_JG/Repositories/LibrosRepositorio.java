@@ -12,8 +12,11 @@ public interface LibrosRepositorio extends JpaRepository<Libros, Integer> {
   //para buscar por el estado
   List<Libros> findByEstado(EstadoLibro estado);
 
+  // Metodo para buscar un libro por su título
+  Libros findByTitulo(String titulo);
+
   // metodo para buscar por titulo y descripcion de la categoria
-  @Query("SELECT l FROM Libros l JOIN l.categorias c WHERE l.titulo LIKE %?1% OR c.descripcion LIKE %?1%")
+  @Query("SELECT l FROM Libros l JOIN l.categoria c WHERE l.titulo LIKE %?1% OR c.descripcion LIKE %?1%")
   List<Libros> buscarPorTituloODescripcionCategoria(String keyword);
 
 

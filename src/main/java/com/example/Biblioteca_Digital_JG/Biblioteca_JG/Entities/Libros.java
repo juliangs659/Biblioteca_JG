@@ -1,21 +1,22 @@
 package com.example.Biblioteca_Digital_JG.Biblioteca_JG.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
 public class Libros {
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int idLibro;  // Usar camelCase
+  private int idLibro;
 
   @Column(nullable = false)
   private String titulo;
 
   @Column(nullable = false)
-  private String referenciaPdf;  // Usar camelCase
+  private String referenciaPdf;
 
   @Enumerated(EnumType.STRING)
   @Column(nullable = false)
@@ -24,26 +25,19 @@ public class Libros {
   @Column(nullable = false)
   private Timestamp fechaCreacion;
 
-
-  @ManyToMany
-  @JoinTable(
-          name = "libros_categorias",
-          joinColumns = @JoinColumn(name = "id_libro"),
-          inverseJoinColumns = @JoinColumn(name = "id_categoria")
-  )
-  private Set<Categorias> categorias;
-
+  @ManyToOne
+  @JoinColumn(name = "idCategoria", nullable = false)
+  private Categorias categoria;
 
   @ManyToOne
-  @JoinColumn(name = "id_autor", nullable = false)
+  @JoinColumn(name = "idAutor", nullable = false)
   private Autores autor;
 
   // Constructor vacío
   public Libros() {
     this.fechaCreacion = new Timestamp(System.currentTimeMillis());
-    this.estado = EstadoLibro.UPLOADED;// Inicializar en el constructor
+    this.estado = EstadoLibro.UPLOADED; // Inicializar en el constructor
   }
-
 
   public Libros(String titulo, String referenciaPdf, EstadoLibro estado, Autores autor) {
     this.titulo = titulo;
@@ -51,6 +45,8 @@ public class Libros {
     this.estado = estado;
     this.autor = autor;
   }
+
+  // Getters y Setters
 
   public int getIdLibro() {
     return idLibro;
@@ -92,12 +88,12 @@ public class Libros {
     this.fechaCreacion = fechaCreacion;
   }
 
-  public Set<Categorias> getCategorias() {
-    return categorias;
+  public Categorias getCategoria() {
+    return categoria;
   }
 
-  public void setCategorias(Set<Categorias> categorias) {
-    this.categorias = categorias;
+  public void setCategoria(Categorias categoria) {
+    this.categoria = categoria;
   }
 
   public Autores getAutor() {
@@ -108,6 +104,8 @@ public class Libros {
     this.autor = autor;
   }
 
+  // ...
+
   @Override
   public String toString() {
     return "Libros{" +
@@ -116,7 +114,7 @@ public class Libros {
             ", referenciaPdf='" + referenciaPdf + '\'' +
             ", estado=" + estado +
             ", fechaCreacion=" + fechaCreacion +
-            ", categorias=" + categorias +
+            ", categoria=" + categoria +
             ", autor=" + autor +
             '}';
   }
