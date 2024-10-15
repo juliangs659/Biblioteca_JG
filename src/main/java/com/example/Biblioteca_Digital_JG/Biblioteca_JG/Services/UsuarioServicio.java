@@ -25,6 +25,11 @@ public class UsuarioServicio {
     return usuarioRepositorio.findById(idUsuario);
   }
 
+  // Buscar un usuario por su username
+  public Optional<Usuarios> getUsuarioByUsername(String username) {
+    return usuarioRepositorio.findByUsername(username);
+  }
+
   //Obtener todos los usuarios
   public List<Usuarios> getAllUsuarios() {
     return usuarioRepositorio.findAll();
