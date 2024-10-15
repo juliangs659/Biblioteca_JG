@@ -13,15 +13,15 @@ public class UsuarioServicio {
 
   //Llamar al repositorio
   @Autowired
-  private UsuarioRepositorio usuarioRepositorio;
+  public UsuarioRepositorio usuarioRepositorio;
 
   //Insertar Usuario
-  private Usuarios saveUsuario(Usuarios usuario){
+  public Usuarios saveUsuario(Usuarios usuario){
     return usuarioRepositorio.save(usuario);
   }
 
   //Obtener Usuario por ID
-  private Optional<Usuarios> getUsuarioById(int idUsuario){
+  public Optional<Usuarios> getUsuarioById(int idUsuario){
     return usuarioRepositorio.findById(idUsuario);
   }
 

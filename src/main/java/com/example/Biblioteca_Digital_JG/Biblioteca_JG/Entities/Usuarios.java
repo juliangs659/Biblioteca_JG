@@ -23,7 +23,7 @@ public class Usuarios {
   private String email;
 
   @Column(nullable = false)
-  private byte[] pass;  // Almacenar la contraseña en formato hash (BINARY)
+  private String pass;  // Almacenar la contraseña en formato hash (BINARY)
 
   @Enumerated(EnumType.STRING)
   @Column(nullable = false)
@@ -32,15 +32,13 @@ public class Usuarios {
   @Column(nullable = false)
   private java.sql.Timestamp fecha_creacion = new java.sql.Timestamp(System.currentTimeMillis());
 
-  @ElementCollection(targetClass = Rol.class)
   @Enumerated(EnumType.STRING)
-  @CollectionTable(name = "roles_usuarios", joinColumns = @JoinColumn(name = "id_usuario"))
-  @Column(name= "rol")
-  private Set<Rol> roles;
+  @Column(nullable = false)
+  private Rol rol;
 
   public Usuarios(){}
 
-  public Usuarios(int id_Usuario, String nombre, String username, String email, byte[] pass, Avatar avatar, Timestamp fecha_creacion) {
+  public Usuarios(int id_Usuario, String nombre, String username, String email, String pass, Avatar avatar, Timestamp fecha_creacion) {
     this.idUsuario = id_Usuario;
     this.nombre = nombre;
     this.username = username;
@@ -50,7 +48,7 @@ public class Usuarios {
     this.fecha_creacion = fecha_creacion;
   }
 
-  public Usuarios(String nombre, String username, String email, byte[] pass) {
+  public Usuarios(String nombre, String username, String email, String pass) {
     this.nombre = nombre;
     this.username = username;
     this.email = email;
@@ -91,11 +89,11 @@ public class Usuarios {
     this.email = email;
   }
 
-  public byte[] getPass() {
+  public String getPass() {
     return pass;
   }
 
-  public void setPass(byte[] pass) {
+  public void setPass(String pass) {
     this.pass = pass;
   }
 
@@ -118,13 +116,14 @@ public class Usuarios {
   @Override
   public String toString() {
     return "Usuarios{" +
-            "id_Usuario=" + idUsuario +
+            "idUsuario=" + idUsuario +
             ", nombre='" + nombre + '\'' +
             ", username='" + username + '\'' +
             ", email='" + email + '\'' +
-            ", pass=" + Arrays.toString(pass) +
+            ", pass='" + pass + '\'' +
             ", avatar=" + avatar +
             ", fecha_creacion=" + fecha_creacion +
+            ", roles=" + rol +
             '}';
   }
 }
