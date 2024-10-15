@@ -26,7 +26,7 @@ Este es un proyecto de **Biblioteca Digital** enfocado en el aprendizaje de desa
 
 1. Clona el repositorio.
     ```bash
-    git clone https://github.com/juliangs659/biblioteca-digital.git
+    git clone https://github.com/juliangs659/Biblioteca_JG
     ```
 
 
