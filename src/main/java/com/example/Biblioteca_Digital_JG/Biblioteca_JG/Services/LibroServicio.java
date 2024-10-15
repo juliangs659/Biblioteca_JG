@@ -1,6 +1,7 @@
 package com.example.Biblioteca_Digital_JG.Biblioteca_JG.Services;
 
 import com.example.Biblioteca_Digital_JG.Biblioteca_JG.DTO.LibroRequest;
+import com.example.Biblioteca_Digital_JG.Biblioteca_JG.DTO.LibrosRequest;
 import com.example.Biblioteca_Digital_JG.Biblioteca_JG.Entities.Autores;
 import com.example.Biblioteca_Digital_JG.Biblioteca_JG.Entities.Categorias;
 import com.example.Biblioteca_Digital_JG.Biblioteca_JG.Entities.Libros;
@@ -10,6 +11,7 @@ import com.example.Biblioteca_Digital_JG.Biblioteca_JG.Repositories.LibrosReposi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -59,8 +61,61 @@ public class LibroServicio {
     return librosRepository.save(libro);
   }
 
+  public List<Libros> saveLibros(LibrosRequest librosRequest) {
+    List<Libros> librosGuardados = new ArrayList<>(); // Lista para almacenar los libros guardados
+
+    for (LibroRequest libroRequest : librosRequest.getLibros()) {
+      // Verificar si el autor ya existe
+      Autores autor = autoresRepository.findByNombreAutor(libroRequest.getAutor().getNombreAutor());
+
+      // Si no existe, guardarlo
+      if (autor == null) {
+        autor = libroRequest.getAutor();
+        autoresRepository.save(autor);
+      }
+
+      // Verificar si la categoría ya existe
+      Categorias categoria = categoriasRepository.findByNombreCategoria(libroRequest.getCategoria().getNombreCategoria());
+
+      // Si no existe, guardarlo
+      if (categoria == null) {
+        categoria = libroRequest.getCategoria();
+        categoriasRepository.save(categoria);
+      }
+
+      // Verificar si el libro ya existe
+      Libros libroExistente = librosRepository.findByTitulo(libroRequest.getLibro().getTitulo());
+
+      if (libroExistente != null) {
+        throw new RuntimeException("El libro ya existe"); // Puedes lanzar una excepción personalizada si lo prefieres
+      }
+
+      // Crear el libro
+      Libros libro = new Libros();
+      libro.setTitulo(libroRequest.getLibro().getTitulo());
+      libro.setReferenciaPdf(libroRequest.getLibro().getReferenciaPdf());
+      libro.setEstado(libroRequest.getLibro().getEstado());
+      libro.setAutor(autor); // Establecer la relación con el autor
+      libro.setCategoria(categoria); // Establecer la relación con la categoría
+
+      // Guardar el libro y agregarlo a la lista de libros guardados
+      librosGuardados.add(librosRepository.save(libro));
+    }
+
+    return librosGuardados; // Retornar la lista de libros guardados
+  }
+
+
+
+
   // Metodo para obtener todos los libros
   public List<Libros> getAllLibros() {
     return librosRepository.findAll();
   }
+
+  public List<Libros> buscarPorAutor(String nombreAutor) {
+    return librosRepository.findByAutor_NombreAutor(nombreAutor);
+  }
+
+
 }

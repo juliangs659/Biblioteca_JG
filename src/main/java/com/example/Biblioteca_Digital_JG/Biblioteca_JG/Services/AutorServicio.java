@@ -31,7 +31,7 @@ public class AutorServicio {
   }
 
   // Buscar un autor por su nombre
-  public Autores getAutorByNombre(String nombreAutor) {
+  public Autores findByNombreAutor(String nombreAutor) {
     return autoresRespositorio.findByNombreAutor(nombreAutor);
   }
 

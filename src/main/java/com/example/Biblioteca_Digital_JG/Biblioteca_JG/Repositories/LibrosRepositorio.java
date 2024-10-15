@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
+
 public interface LibrosRepositorio extends JpaRepository<Libros, Integer> {
 
   //para buscar por el estado
@@ -19,5 +20,6 @@ public interface LibrosRepositorio extends JpaRepository<Libros, Integer> {
   @Query("SELECT l FROM Libros l JOIN l.categoria c WHERE l.titulo LIKE %?1% OR c.descripcion LIKE %?1%")
   List<Libros> buscarPorTituloODescripcionCategoria(String keyword);
 
+  List<Libros> findByAutor_NombreAutor(String nombreAutor);
 
 }
