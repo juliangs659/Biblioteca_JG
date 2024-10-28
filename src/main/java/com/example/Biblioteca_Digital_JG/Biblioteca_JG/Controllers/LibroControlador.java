@@ -1,9 +1,7 @@
 package com.example.Biblioteca_Digital_JG.Biblioteca_JG.Controllers;
 
 import com.example.Biblioteca_Digital_JG.Biblioteca_JG.DTO.LibroRequest;
-import com.example.Biblioteca_Digital_JG.Biblioteca_JG.DTO.LibrosRequest;
 import com.example.Biblioteca_Digital_JG.Biblioteca_JG.Entities.Libros;
-import com.example.Biblioteca_Digital_JG.Biblioteca_JG.Repositories.AutoresRespositorio;
 import com.example.Biblioteca_Digital_JG.Biblioteca_JG.Services.AutorServicio;
 import com.example.Biblioteca_Digital_JG.Biblioteca_JG.Services.LibroServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200/")
 @RestController
 @RequestMapping("/libros")
 public class LibroControlador {
@@ -23,12 +22,7 @@ public class LibroControlador {
   @Autowired
   private AutorServicio autorServicio;
 
-  /*// Crear libro con autor y categoría
-  @PostMapping
-  public ResponseEntity<Libros> crearLibro(@RequestBody LibroRequest libroRequest) {
-    Libros libroGuardado = libroServicio.saveLibro(libroRequest);
-    return ResponseEntity.status(HttpStatus.CREATED).body(libroGuardado);
-  }*/
+
 
   // Crear varios libros a la vez
   @PostMapping

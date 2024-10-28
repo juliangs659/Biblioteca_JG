@@ -61,51 +61,6 @@ public class LibroServicio {
     return librosRepository.save(libro);
   }
 
-  public List<Libros> saveLibros(LibrosRequest librosRequest) {
-    List<Libros> librosGuardados = new ArrayList<>(); // Lista para almacenar los libros guardados
-
-    for (LibroRequest libroRequest : librosRequest.getLibros()) {
-      // Verificar si el autor ya existe
-      Autores autor = autoresRepository.findByNombreAutor(libroRequest.getAutor().getNombreAutor());
-
-      // Si no existe, guardarlo
-      if (autor == null) {
-        autor = libroRequest.getAutor();
-        autoresRepository.save(autor);
-      }
-
-      // Verificar si la categoría ya existe
-      Categorias categoria = categoriasRepository.findByNombreCategoria(libroRequest.getCategoria().getNombreCategoria());
-
-      // Si no existe, guardarlo
-      if (categoria == null) {
-        categoria = libroRequest.getCategoria();
-        categoriasRepository.save(categoria);
-      }
-
-      // Verificar si el libro ya existe
-      Libros libroExistente = librosRepository.findByTitulo(libroRequest.getLibro().getTitulo());
-
-      if (libroExistente != null) {
-        throw new RuntimeException("El libro ya existe"); // Puedes lanzar una excepción personalizada si lo prefieres
-      }
-
-      // Crear el libro
-      Libros libro = new Libros();
-      libro.setTitulo(libroRequest.getLibro().getTitulo());
-      libro.setReferenciaPdf(libroRequest.getLibro().getReferenciaPdf());
-      libro.setEstado(libroRequest.getLibro().getEstado());
-      libro.setAutor(autor); // Establecer la relación con el autor
-      libro.setCategoria(categoria); // Establecer la relación con la categoría
-
-      // Guardar el libro y agregarlo a la lista de libros guardados
-      librosGuardados.add(librosRepository.save(libro));
-    }
-
-    return librosGuardados; // Retornar la lista de libros guardados
-  }
-
-
 
 
   // Metodo para obtener todos los libros

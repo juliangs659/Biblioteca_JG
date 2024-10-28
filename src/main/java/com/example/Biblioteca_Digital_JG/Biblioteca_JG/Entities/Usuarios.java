@@ -36,9 +36,10 @@ public class Usuarios {
   @Column(nullable = false)
   private Rol rol;
 
-  public Usuarios(){}
+  public Usuarios(){
+  }
 
-  public Usuarios(int id_Usuario, String nombre, String username, String email, String pass, Avatar avatar, Timestamp fecha_creacion) {
+  public Usuarios(int id_Usuario, String nombre, String username, String email, String pass, Avatar avatar, Timestamp fecha_creacion, Rol rol) {
     this.idUsuario = id_Usuario;
     this.nombre = nombre;
     this.username = username;
@@ -46,6 +47,7 @@ public class Usuarios {
     this.pass = pass;
     this.avatar = avatar;
     this.fecha_creacion = fecha_creacion;
+    this.rol = rol;
   }
 
   public Usuarios(String nombre, String username, String email, String pass) {
@@ -56,6 +58,15 @@ public class Usuarios {
   }
 
 // Getters y Setters
+
+
+  public Rol getRol() {
+    return rol;
+  }
+
+  public void setRol(Rol rol) {
+    this.rol = rol;
+  }
 
   public int getIdUsuario() {
     return idUsuario;

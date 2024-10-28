@@ -1,6 +1,7 @@
 package com.example.Biblioteca_Digital_JG.Biblioteca_JG.Controllers;
 
 import com.example.Biblioteca_Digital_JG.Biblioteca_JG.Entities.Usuarios;
+import com.example.Biblioteca_Digital_JG.Biblioteca_JG.Repositories.UsuarioRepositorio;
 import com.example.Biblioteca_Digital_JG.Biblioteca_JG.Services.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200/")
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioControlador {
@@ -22,6 +24,7 @@ public class UsuarioControlador {
     Usuarios usuarioNuevo = usuarioServicio.saveUsuario(usuario);
     return new ResponseEntity<>(usuarioNuevo, HttpStatus.CREATED);
   }
+
 
   //Obtener todos los Usuarios
   @GetMapping
