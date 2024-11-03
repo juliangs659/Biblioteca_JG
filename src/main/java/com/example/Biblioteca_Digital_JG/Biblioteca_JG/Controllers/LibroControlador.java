@@ -50,7 +50,6 @@ public class LibroControlador {
     return ResponseEntity.ok(libros);
   }
 
-  //eliminar libro por id
   // Eliminar libro por ID
   @DeleteMapping
   public ResponseEntity<Void> eliminarLibro(@RequestParam Integer id) {
@@ -59,6 +58,17 @@ public class LibroControlador {
       return ResponseEntity.noContent().build();
     } catch (RuntimeException e) { // Asegúrate de manejar una excepción si el libro no se encuentra
       return ResponseEntity.notFound().build();
+    }
+  }
+
+  // obtener libro por ID
+  @GetMapping("/{id}")
+  public ResponseEntity<Libros> getLibroById(@PathVariable Integer id) {
+    try {
+      Libros libro = libroServicio.buscarPorId(id);
+      return ResponseEntity.ok(libro); // Devuelve el libro encontrado
+    } catch (RuntimeException e) {
+      return ResponseEntity.notFound().build(); // Devuelve 404 si no se encuentra el libro
     }
   }
 }

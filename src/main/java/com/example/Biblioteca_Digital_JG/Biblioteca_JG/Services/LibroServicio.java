@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LibroServicio {
@@ -78,6 +79,11 @@ public class LibroServicio {
       throw new RuntimeException("El libro con ID " + id + " no existe.");
     }
     librosRepository.deleteById(id);
+  }
+
+  //obtener libro por id
+  public Libros buscarPorId(Integer id) {
+    return librosRepository.findById(id).get();
   }
 
 
